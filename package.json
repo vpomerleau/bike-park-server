@@ -1,0 +1,27 @@
+{
+  "name": "bike-park-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "knex migrate:latest",
+    "migrate:down": "knex migrate:down",
+    "migrate:rollback": "knex migrate:rollback",
+    "seed": "knex seed:run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vpomerleau/bike-park-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vpomerleau/bike-park-server/issues"
+  },
+  "homepage": "https://github.com/vpomerleau/bike-park-server#readme",
+  "dependencies": {
+    "knex": "^2.2.0",
+    "mysql": "^2.18.1"
+  }
+}
