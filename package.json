@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon server.js",
     "migrate": "knex migrate:latest",
     "migrate:down": "knex migrate:down",
     "migrate:rollback": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +28,8 @@
     "express-openid-connect": "^2.8.0",
     "knex": "^2.2.0",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
   }
 }
