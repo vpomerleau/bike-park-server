@@ -23,13 +23,20 @@
   },
   "homepage": "https://github.com/vpomerleau/bike-park-server#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-jwt": "^7.7.5",
+    "express-jwt-authz": "^2.4.1",
     "express-openid-connect": "^2.8.0",
+    "helmet": "^5.1.1",
+    "jwks-rsa": "^2.1.4",
     "knex": "^2.2.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "nocache": "^3.0.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1"
   }
 }
