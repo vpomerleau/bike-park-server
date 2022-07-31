@@ -33,7 +33,8 @@
     "jwks-rsa": "^2.0.5",
     "knex": "^2.2.0",
     "mysql": "^2.18.1",
-    "nocache": "^3.0.4"
+    "nocache": "^3.0.4",
+    "stripe": "^9.16.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",

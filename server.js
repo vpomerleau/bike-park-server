@@ -7,6 +7,8 @@ const { messagesRouter } = require("./messages/messages.router");
 const { errorHandler } = require("./middleware/error.middleware");
 const { notFoundHandler } = require("./middleware/not-found.middleware");
 
+app.use(express.static("public"));
+
 dotenv.config();
 
 if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
@@ -17,12 +19,17 @@ if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
 
 const PORT = parseInt(process.env.PORT, 10);
 const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
+// Stripe test secret API key
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 const app = express();
 const apiRouter = express.Router();
 
 app.use(express.json());
 app.set("json spaces", 2);
+
+// Auth0
+
 app.use(
   helmet({
     hsts: {
@@ -55,6 +62,32 @@ app.use(
   })
 );
 
+// Stripe payment
+
+const calculateOrderAmount = (items) => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  return 1400;
+};
+
+app.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+
+  // Create a PaymentIntent with the order amount and currency
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(items),
+    currency: "cad",
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+});
+
 app.use("/api", apiRouter);
 apiRouter.use("/messages", messagesRouter);
 
@@ -62,5 +95,5 @@ app.use(errorHandler);
 app.use(notFoundHandler);
 
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`🚲 Listening on port ${PORT}`);
 });
