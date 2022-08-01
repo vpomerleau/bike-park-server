@@ -7,8 +7,6 @@ const { messagesRouter } = require("./messages/messages.router");
 const { errorHandler } = require("./middleware/error.middleware");
 const { notFoundHandler } = require("./middleware/not-found.middleware");
 
-app.use(express.static("public"));
-
 dotenv.config();
 
 if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
@@ -25,6 +23,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 const app = express();
 const apiRouter = express.Router();
 
+app.use(express.static("public"));
 app.use(express.json());
 app.set("json spaces", 2);
 
