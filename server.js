@@ -40,6 +40,10 @@ app.use(
       useDefaults: true,
       directives: {
         "default-src": ["'none'"],
+        "script-src": ["'self'", "https://checkout.stripe.com", "https://js.stripe.com"],
+        "connect-src": ["https://checkout.stripe.com", "https://api.stripe.com"],
+        "frame-src": ["https://checkout.stripe.com", "https://js.stripe.com", "https://hooks.stripe.com"],
+        "img-src": ["https://*.stripe.com"],
         "frame-ancestors": ["'none'"],
       },
     },
