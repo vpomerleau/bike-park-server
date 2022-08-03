@@ -29,21 +29,6 @@ app.use(express.static("public"));
 app.use(express.json());
 app.set("json spaces", 2);
 
-// Database queries
-
-// get all products
-app.get("/products", (req, res) => {
-  knex
-    .select("*")
-    .from("products")
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(500).send("Error getting products");
-    });
-});
-
 // Auth0
 
 app.use(
@@ -77,6 +62,21 @@ app.use(
     maxAge: 86400,
   })
 );
+
+// Database queries
+
+// get all products
+app.get("/products", (req, res) => {
+  knex
+    .select("*")
+    .from("products")
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).send("Error getting products");
+    });
+});
 
 // Stripe payment
 
