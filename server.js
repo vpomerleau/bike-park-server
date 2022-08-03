@@ -2,6 +2,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
 const helmet = require("helmet");
+const knex = require("knex")(require("./knexfile"));
 const nocache = require("nocache");
 const { messagesRouter } = require("./messages/messages.router");
 const { errorHandler } = require("./middleware/error.middleware");
@@ -15,9 +16,10 @@ if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
   );
 }
 
-const PORT = parseInt(process.env.PORT, 10);
+const PORT = parseInt(process.env.PORT, 10) || 8080;
 const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
-// Stripe test secret API key
+
+// Stripe test secret API key (for development - does not receive payments)
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 const app = express();
@@ -26,6 +28,21 @@ const apiRouter = express.Router();
 app.use(express.static("public"));
 app.use(express.json());
 app.set("json spaces", 2);
+
+// Database queries
+
+// get all products
+app.get("/products", (req, res) => {
+  knex
+    .select("*")
+    .from("products")
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      res.status(500).send("Error getting products");
+    });
+});
 
 // Auth0
 
