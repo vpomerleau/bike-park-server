@@ -30,6 +30,6 @@ exports.up = function (knex) {
   
   exports.down = function (knex) {
     // chain tables according to foreign keys (tables with fkey first)
-    return knex.schema.dropTable('rider_product').dropTable('transactions').dropTable('products').dropTable('riders'); 
+    return knex.schema.dropTable('rider_product').dropTable('products').dropTable('riders'); 
   };
   
