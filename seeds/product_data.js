@@ -3,13 +3,13 @@
  * @returns { Promise<void> } 
  */
 // import seed data files, arrays of objects
-const riderData = require('../seed_data/rider');
+const productData = require('../seed_data/product');
 
 exports.seed = function (knex) {
-  return knex('rider') // this table doesn't exit yet
+  return knex('products')
     .del()
-    .then(function () {
-      return knex('rider').insert(riderData);
+    .then(()=>{
+      return knex('products').insert(productData);
     })
     // repeat for other tables
     // .then(() => {
