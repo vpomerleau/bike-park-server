@@ -40,9 +40,20 @@ app.use(
       useDefaults: true,
       directives: {
         "default-src": ["'none'"],
-        "script-src": ["'self'", "https://checkout.stripe.com", "https://js.stripe.com"],
-        "connect-src": ["https://checkout.stripe.com", "https://api.stripe.com"],
-        "frame-src": ["https://checkout.stripe.com", "https://js.stripe.com", "https://hooks.stripe.com"],
+        "script-src": [
+          "'self'",
+          "https://checkout.stripe.com",
+          "https://js.stripe.com",
+        ],
+        "connect-src": [
+          "https://checkout.stripe.com",
+          "https://api.stripe.com",
+        ],
+        "frame-src": [
+          "https://checkout.stripe.com",
+          "https://js.stripe.com",
+          "https://hooks.stripe.com",
+        ],
         "img-src": ["https://*.stripe.com"],
         "frame-ancestors": ["'none'"],
       },
@@ -88,11 +99,18 @@ const calculateOrderAmount = (items) => {
   // Replace this constant with a calculation of the order's amount
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
-  return 2000;
+  let orderAmount = 0;
+  items.map((item) => {
+    const subtotal = item.price * item.quantity;
+    orderAmount += subtotal;
+  });
+
+  return orderAmount*100;
 };
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
+  const items = req.body;
+  // TODO save order details in DB
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
