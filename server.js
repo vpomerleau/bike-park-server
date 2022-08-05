@@ -2,11 +2,15 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const express = require("express");
 const helmet = require("helmet");
-const knex = require("knex")(require("./knexfile"));
+// const knex = require("knex")(require("./knexfile"));
 const nocache = require("nocache");
 const { messagesRouter } = require("./messages/messages.router");
 const { errorHandler } = require("./middleware/error.middleware");
 const { notFoundHandler } = require("./middleware/not-found.middleware");
+
+const productRoutes = require('./routes/productRouter');
+const riderRoutes = require('./routes/riderRouter');
+const stripeRoutes = require('./routes/stripeRouter');
 
 dotenv.config();
 
@@ -18,9 +22,6 @@ if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
 
 const PORT = parseInt(process.env.PORT, 10) || 8080;
 const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
-
-// Stripe test secret API key (for development - does not receive payments)
-const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
 
 const app = express();
 const apiRouter = express.Router();
@@ -63,6 +64,7 @@ app.use(
     },
   })
 );
+
 app.use((req, res, next) => {
   res.contentType("application/json; charset=utf-8");
   next();
@@ -78,53 +80,10 @@ app.use(
   })
 );
 
-// Database queries
-
-// get all products
-app.get("/products", (req, res) => {
-  knex
-    .select("*")
-    .from("products")
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.status(500).send("Error getting products");
-    });
-});
-
-// Stripe payment
-
-const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  let orderAmount = 0;
-  items.map((item) => {
-    const subtotal = item.price * item.quantity;
-    orderAmount += subtotal;
-  });
-
-  return orderAmount*100;
-};
-
-app.post("/create-payment-intent", async (req, res) => {
-  const items = req.body;
-  // TODO save order details in DB
-
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: "cad",
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
-
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
-});
+// Routes
+app.use('/products', productRoutes);
+app.use('/riders', riderRoutes);
+app.use('/stripe', stripeRoutes);
 
 app.use("/api", apiRouter);
 apiRouter.use("/messages", messagesRouter);
