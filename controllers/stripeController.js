@@ -1,5 +1,5 @@
-const knexConfig = require('../knexfile').development;
-const knex = require('knex')(knexConfig);
+const knexConfig = require("../knexfile").development;
+const knex = require("knex")(knexConfig);
 
 // Stripe test secret API key (for development - does not receive payments)
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST_KEY);
@@ -20,7 +20,7 @@ const calculateOrderAmount = (items) => {
 exports.new = async (req, res) => {
   const items = req.body;
   const stringifiedCart = JSON.stringify(items);
-  const calculatedAmount=calculateOrderAmount(items);
+  const calculatedAmount = calculateOrderAmount(items);
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
@@ -29,9 +29,9 @@ exports.new = async (req, res) => {
     automatic_payment_methods: {
       enabled: true,
     },
-    metadata:{
+    metadata: {
       cart: stringifiedCart,
-    }
+    },
   });
 
   res.send({
@@ -40,4 +40,12 @@ exports.new = async (req, res) => {
     transactionStatus: paymentIntent.status,
     calculatedAmount: calculatedAmount,
   });
+};
+
+exports.paymentDetails = async (_req, res) => {
+  const paymentIntentId = _req.params;
+
+  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId.id);
+
+  res.send(paymentIntent);
 };
