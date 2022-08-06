@@ -46,6 +46,7 @@ exports.new = async (req, res) => {
   })
 
   res.send({
+    paymentIntentId: paymentIntent.id,
     clientSecret: paymentIntent.client_secret,
   });
 };

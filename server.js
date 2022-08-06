@@ -11,6 +11,9 @@ const { notFoundHandler } = require("./middleware/not-found.middleware");
 const productRoutes = require('./routes/productRouter');
 const riderRoutes = require('./routes/riderRouter');
 const stripeRoutes = require('./routes/stripeRouter');
+const transactionRoutes = require('./routes/transactionRouter');
+const productTransactionRoutes = require('./routes/productTransactionRouter');
+const riderProductRoutes = require('./routes/riderProductRouter');
 
 dotenv.config();
 
@@ -84,6 +87,9 @@ app.use(
 app.use('/products', productRoutes);
 app.use('/riders', riderRoutes);
 app.use('/stripe', stripeRoutes);
+app.use('/transaction', transactionRoutes);
+app.use('/product-transaction', productTransactionRoutes);
+app.use('/rider-product', riderProductRoutes);
 
 app.use("/api", apiRouter);
 apiRouter.use("/messages", messagesRouter);
