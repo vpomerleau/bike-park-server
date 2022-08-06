@@ -30,7 +30,7 @@ exports.up = function (knex) {
         table.string('stripe_payment_id').unique().notNullable();
         table.string('transaction_status').notNullable();
         table.timestamp('date_created').defaultTo(knex.fn.now());
-        table.integer('rider_id').unsigned().notNullable();
+        table.integer('rider_id').unsigned();
         table.foreign('rider_id').references('id').inTable('riders').onUpdate("CASCADE").onDelete("CASCADE");
       })
       .createTable('product_transaction', (table)=>{

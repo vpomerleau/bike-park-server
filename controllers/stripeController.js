@@ -19,19 +19,25 @@ const calculateOrderAmount = (items) => {
 
 exports.new = async (req, res) => {
   const items = req.body;
+  const stringifiedCart = JSON.stringify(items);
+  const calculatedAmount=calculateOrderAmount(items);
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
+    amount: calculatedAmount,
     currency: "cad",
     automatic_payment_methods: {
       enabled: true,
     },
+    metadata:{
+      cart: stringifiedCart,
+    }
   });
 
   res.send({
     paymentIntentId: paymentIntent.id,
     clientSecret: paymentIntent.client_secret,
     transactionStatus: paymentIntent.status,
+    calculatedAmount: calculatedAmount,
   });
 };
