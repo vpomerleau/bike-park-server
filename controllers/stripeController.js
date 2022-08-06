@@ -29,24 +29,9 @@ exports.new = async (req, res) => {
     },
   });
 
-  // create an entry in the transactions table
-  // include transaction id
-  // include rider email
-  // include paymentIntent.status (pending, success, error)
-
-
-  // for each item in the order
-  items.map(item=>{
-    // create a new entry in the rider products table
-    // include rider.email
-    // include paymentIntent.id as transaction id
-    // include product id
-    // include product quantity
-
-  })
-
   res.send({
     paymentIntentId: paymentIntent.id,
     clientSecret: paymentIntent.client_secret,
+    transactionStatus: paymentIntent.status,
   });
 };
