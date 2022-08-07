@@ -29,12 +29,17 @@ exports.productsForOneRider = (_req, res) => {
 };
 
 exports.new = (req, res) => {
+const riderProductInfo = req.body;
+console.log(riderProductInfo);
+
   knex("rider_product")
-    .insert(req.body)
+    .insert(riderProductInfo)
+    .onConflict('id')
+    .ignore()
     .then(() => {
       knex("rider_product")
-        .select("product_id", "quantity")
-        .where("rider_id", req.body.rider_id)
+        .select("*")
+        .where("rider_id", riderProductInfo.rider_id)
         .then((data) => {
           res.status(201).send(data);
         });
