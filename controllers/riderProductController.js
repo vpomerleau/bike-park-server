@@ -16,10 +16,13 @@ exports.index = (req, res) => {
 };
 
 exports.productsForOneRider = (_req, res) => {
-  const { riderId } = _req.params;
+  const { id } = _req.params;
+  console.log(id);
 
   knex("rider_product")
-    .where({ rider_id: riderId })
+    .join("products", "rider_product.product_id", "=", "products.id")
+    .select("products.name","rider_product.quantity")
+    .where({ "rider_id": id })
     .then((data) => {
       res.status(200).json(data);
     })
@@ -29,12 +32,11 @@ exports.productsForOneRider = (_req, res) => {
 };
 
 exports.new = (req, res) => {
-const riderProductInfo = req.body;
-console.log(riderProductInfo);
+  const riderProductInfo = req.body;
 
   knex("rider_product")
     .insert(riderProductInfo)
-    .onConflict('id')
+    .onConflict("id")
     .ignore()
     .then(() => {
       knex("rider_product")
