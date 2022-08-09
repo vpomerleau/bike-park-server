@@ -22,17 +22,6 @@ exports.riderById = (_req, res) => {
     .catch((err) => res.status(400).send(`Error retrieving rider: ${err}`));
 };
 
-// exports.riderByEmail = (_req, res) => {
-//   const { email } = _req.params;
-
-//   knex("riders")
-//     .where({ email })
-//     .then((data) => {
-//       res.status(200).json(data);
-//     })
-//     .catch((err) => res.status(400).send(`Error retrieving rider: ${err}`));
-// };
-
 exports.new = (req, res) => {
   const riderInfo = req.body;
 

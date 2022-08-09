@@ -22,13 +22,6 @@ exports.up = function (knex) {
         table.integer('rider_id').unsigned();
         table.foreign('rider_id').references('id').inTable('riders').onUpdate("CASCADE").onDelete("CASCADE");
       })
-      .createTable('product_transaction', (table)=>{
-        table.increments('id').primary();
-        table.integer('transaction_id').unsigned().notNullable();
-        table.integer('product_id').unsigned().notNullable();
-        table.foreign('transaction_id').references('id').inTable('transactions').onUpdate("CASCADE").onDelete("CASCADE");
-        table.foreign('product_id').references('id').inTable('products').onUpdate("CASCADE").onDelete("CASCADE");
-      })
       .createTable('rider_product', (table)=>{
         table.string('id').unique().primary();
         table.integer('rider_id').unsigned().notNullable();
@@ -43,6 +36,6 @@ exports.up = function (knex) {
   
   exports.down = function (knex) {
     // chain tables according to foreign keys (tables with fkey first)
-    return knex.schema.dropTable('rider_product').dropTable('product_transaction').dropTable('transactions').dropTable('products').dropTable('riders'); 
+    return knex.schema.dropTable('rider_product').dropTable('transactions').dropTable('products').dropTable('riders'); 
   };
   
