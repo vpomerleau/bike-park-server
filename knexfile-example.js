@@ -9,7 +9,7 @@ module.exports = {
     connection: {
       host: "127.0.0.1",
       user: "root",
-      password: "rootroot",
+      password: '', //YOUR MYSQL PASSWORD GOES HERE
       database: "bikepark",
       charset: "utf8",
     },
