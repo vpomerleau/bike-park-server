@@ -1,4 +1,4 @@
-const knexConfig = require("../knexfile").development;
+const knexConfig = require("../knexfile-example").development;
 const knex = require("knex")(knexConfig);
 
 // Stripe test secret API key (for development - does not receive payments)
