@@ -96,6 +96,6 @@ apiRouter.use("/messages", messagesRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
-app.listen(process.env.PORT | PORT, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log(`🚲 Listening on port ${PORT}`);
 });
