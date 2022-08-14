@@ -16,13 +16,13 @@ const riderProductRoutes = require("./routes/riderProductRouter");
 
 dotenv.config();
 
-if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
-  throw new Error(
-    "Missing required environment variables. Check docs for more info."
-  );
-}
+// if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
+//   throw new Error(
+//     "Missing required environment variables. Check docs for more info."
+//   );
+// }
 
-const PORT = parseInt(process.env.PORT, 10) || 8080;
+// const PORT = parseInt(process.env.PORT, 10) || 8080;
 const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 
 const app = express();
@@ -96,6 +96,6 @@ apiRouter.use("/messages", messagesRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
-app.listen(process.env.PORT || PORT, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log(`🚲 Listening on port ${PORT}`);
 });
