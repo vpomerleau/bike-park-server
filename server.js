@@ -97,5 +97,5 @@ app.use(errorHandler);
 app.use(notFoundHandler);
 
 app.listen(process.env.PORT || 8080, () => {
-  console.log(`🚲 Listening on port ${PORT}`);
+  console.log(`🚲 Listening on port ${process.env.PORT || 8080}`);
 });
