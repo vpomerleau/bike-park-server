@@ -135,6 +135,3 @@ Temporary Items
 ### macOS Patch ###
 # iCloud generated files
 *.icloud
-
-### KNEX
-knexfile.js
