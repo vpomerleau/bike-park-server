@@ -7,12 +7,12 @@ const { messagesRouter } = require("./messages/messages.router");
 const { errorHandler } = require("./middleware/error.middleware");
 const { notFoundHandler } = require("./middleware/not-found.middleware");
 
-const productRoutes = require('./routes/productRouter');
-const riderRoutes = require('./routes/riderRouter');
-const stripeRoutes = require('./routes/stripeRouter');
-const transactionRoutes = require('./routes/transactionRouter');
-const productTransactionRoutes = require('./routes/productTransactionRouter');
-const riderProductRoutes = require('./routes/riderProductRouter');
+const productRoutes = require("./routes/productRouter");
+const riderRoutes = require("./routes/riderRouter");
+const stripeRoutes = require("./routes/stripeRouter");
+const transactionRoutes = require("./routes/transactionRouter");
+const productTransactionRoutes = require("./routes/productTransactionRouter");
+const riderProductRoutes = require("./routes/riderProductRouter");
 
 dotenv.config();
 
@@ -83,12 +83,12 @@ app.use(
 );
 
 // Routes
-app.use('/products', productRoutes);
-app.use('/riders', riderRoutes);
-app.use('/stripe', stripeRoutes);
-app.use('/transaction', transactionRoutes);
-app.use('/product-transaction', productTransactionRoutes);
-app.use('/rider-product', riderProductRoutes);
+app.use("/products", productRoutes);
+app.use("/riders", riderRoutes);
+app.use("/stripe", stripeRoutes);
+app.use("/transaction", transactionRoutes);
+app.use("/product-transaction", productTransactionRoutes);
+app.use("/rider-product", riderProductRoutes);
 
 app.use("/api", apiRouter);
 apiRouter.use("/messages", messagesRouter);
@@ -96,6 +96,6 @@ apiRouter.use("/messages", messagesRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT | PORT, () => {
   console.log(`🚲 Listening on port ${PORT}`);
 });
