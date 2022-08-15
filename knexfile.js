@@ -4,7 +4,7 @@ const connections = {
     connection: {
       host: "127.0.0.1",
       user: "root",
-      password: "", //YOUR MYSQL PASSWORD GOES HERE
+      password: "rootroot",
       database: "bikepark",
       charset: "utf8",
     },
